@@ -63,6 +63,11 @@ func visit(n *html.Node) []string {
 		siblingRelatives = visit(n.NextSibling)
 	}
 	return append(self, append(firstChildRelatives, siblingRelatives...)...)
+	// cleaner implementation found online
+	// func visit(links []string, n *html.Node) []string {
+	// links = visit(links, n.FirstChild)
+	// links = visit(links, n.NextSibling)
+	// return links
 }
 
 //!-visit
