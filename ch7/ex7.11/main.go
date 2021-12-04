@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 //!+main
@@ -20,8 +21,6 @@ func main() {
 	http.HandleFunc("/list", db.list)
 	http.HandleFunc("/price", db.price)
 	http.HandleFunc("/create", db.create)
-	http.HandleFunc("/update", db.update)
-	http.HandleFunc("/delete", db.delete)
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
 }
 
@@ -49,16 +48,15 @@ func (db database) price(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+// localhost:8000/create?item=hat&price=10
 func (db database) create(w http.ResponseWriter, req *http.Request) {
-	item, price := req.URL.Query().Get("item"), req.URL.Query().Get("price")
-	db[item] = int(price)
-
-}
-
-func (db database) update(w http.ResponseWriter, req *http.Request) {
-
-}
-
-func (db database) delete(w http.ResponseWriter, req *http.Request) {
-
+	item := req.URL.Query().Get("item")
+	price := req.URL.Query().Get("price")
+	priceFloat, err := strconv.ParseFloat(price, 32)
+	if err != nil {
+		fmt.Fprintf(w, "invalid price: %s\n", price)
+		return
+	}
+	db[item] = dollars(priceFloat)
+	fmt.Fprintf(w, "%s written to database with price %s", item, price)
 }
