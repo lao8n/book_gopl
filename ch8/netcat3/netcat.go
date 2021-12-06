@@ -4,6 +4,9 @@
 // See page 227.
 
 // Netcat is a simple read/write client for TCP servers.
+// Run by
+// 1. go run reverb1 &
+// 2. go run netcat3
 package main
 
 import (
