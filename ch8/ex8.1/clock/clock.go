@@ -59,7 +59,7 @@ func main() {
 			log.Print(err) // e.g., connection aborted
 			continue
 		}
-		go handleConn(conn) // handle connections concurrently
+		go handleConn(conn) // handle connections concurrently // don't need to this as single client for multiple servers
 	}
 	//!-
 }
