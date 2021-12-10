@@ -35,8 +35,6 @@ func main() {
 		conn.Close()
 	}
 	<-done // wait for background goroutine to finish
-	// close Read afterwards
-	// conn.CloseRead()
 }
 
 //!-
