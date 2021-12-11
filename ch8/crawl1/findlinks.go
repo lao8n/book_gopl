@@ -36,7 +36,7 @@ func main() {
 	worklist := make(chan []string)
 
 	// Start with the command-line arguments.
-	go func() { worklist <- os.Args[1:] }()
+	go func() { worklist <- os.Args[1:] }() // needed to avoid deadlock in which both the main goroutine and crawler goroutine attempt to send to each other whilst neither is receiving
 
 	// Crawl the web concurrently.
 	seen := make(map[string]bool)
@@ -44,7 +44,7 @@ func main() {
 		for _, link := range list {
 			if !seen[link] {
 				seen[link] = true
-				go func(link string) {
+				go func(link string) { // take link as explicit parameter to avoid variable capture
 					worklist <- crawl(link)
 				}(link)
 			}
