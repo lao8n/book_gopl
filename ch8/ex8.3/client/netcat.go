@@ -5,8 +5,8 @@
 
 // Netcat is a simple read/write client for TCP servers.
 // Run by
-// 1. go run reverb1 &
-// 2. go run netcat3
+// 1. go run server &
+// 2. go run client
 package main
 
 import (
@@ -29,12 +29,17 @@ func main() {
 		done <- struct{}{} // signal the main goroutine
 	}()
 	mustCopy(conn, os.Stdin)
-	conn.Close()
+	if conn, ok := conn.(*net.TCPConn); ok {
+		conn.CloseWrite()
+	} else {
+		conn.Close()
+	}
 	<-done // wait for background goroutine to finish
+	// close Read afterwards
+	// conn.CloseRead()
 }
 
 //!-
-
 func mustCopy(dst io.Writer, src io.Reader) {
 	if _, err := io.Copy(dst, src); err != nil {
 		log.Fatal(err)

@@ -1,6 +1,7 @@
 // Copyright © 2016 Alan A. A. Donovan & Brian W. Kernighan.
 // License: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+//go:build ignore
 // +build ignore
 
 // The thumbnail command produces thumbnails of JPEG files
@@ -40,3 +41,9 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
+// 1. add goroutines
+// 2. but problem is need to wait for them so add channel to communicate over
+// 3. but want errors as well but need to make sure use buffered channel (or drain)
+// 4. but want unknown number of file names so communicate via channel
+// 5. but need to keep track of loop operations so use a sync.WaitGroup
