@@ -30,7 +30,7 @@ func main() {
 
 	//!+
 	fmt.Println("Commencing countdown.  Press return to abort.")
-	tick := time.Tick(1 * time.Second)
+	tick := time.Tick(1 * time.Second) // better pattern is to use time.NewTicker(), ticker.C and ticker.Stop()
 	for countdown := 10; countdown > 0; countdown-- {
 		fmt.Println(countdown)
 		select {
