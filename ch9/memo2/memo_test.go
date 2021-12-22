@@ -6,9 +6,12 @@ package memo_test
 import (
 	"testing"
 
-	"gopl.io/ch9/memo2"
 	"gopl.io/ch9/memotest"
+	"memo2"
 )
+
+// go test -run=TestConcurrent -race
+// passes but no advantage
 
 var httpGetBody = memotest.HTTPGetBody
 
